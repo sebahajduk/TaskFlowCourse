@@ -1,50 +1,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-@Reducer
-struct TaskListReducer {
-  @ObservableState
-  struct State: Equatable {
-    var taskName: String
-    var taskList: [Task]
-
-    init(taskName: String = "", taskList: [Task] = []) {
-      self.taskName = taskName
-      self.taskList = taskList
-    }
-  }
-
-  enum Action: Equatable, BindableAction {
-    case addButtonTapped
-    case binding(BindingAction<State>)
-  }
-
-  var body: some ReducerOf<Self> {
-    BindingReducer()
-
-    Reduce { state, action in
-      switch action {
-      case .addButtonTapped:
-        let task = Task(name: state.taskName, dateCreated: Date())
-        state.taskList.append(task)
-        state.taskName = ""
-        return .none
-
-      case .binding:
-        return .none
-      }
-    }
-    ._printChanges()
-  }
-}
-
-struct Task: Identifiable, Equatable {
-  let id: UUID = .init()
-  let name: String
-  let dateCreated: Date
-}
-
-struct ContentView: View {
+struct TaskListView: View {
   @Bindable var store: StoreOf<TaskListReducer>
 
   var body: some View {
@@ -57,6 +14,7 @@ struct ContentView: View {
             Text(task.dateCreated, format: .dateTime)
           }
         }
+        .onDelete { store.send(.deleteTask(task.id)) }
       }
       .listStyle(.plain)
 
@@ -75,13 +33,22 @@ struct ContentView: View {
       .background(Color.purple)
       .foregroundStyle(Color.white)
       .font(.footnote.bold())
+
+      Button("Cancel effect") {
+        store.send(.cancelEffect)
+      }
+      .padding(10.0)
+      .background(Color.purple)
+      .foregroundStyle(Color.white)
+      .font(.footnote.bold())
     }
+    .onAppear { store.send(.onAppear) }
     .padding()
   }
 }
 
 #Preview {
-  ContentView(
+  TaskListView(
     store: Store(
       initialState: TaskListReducer.State(),
       reducer: {

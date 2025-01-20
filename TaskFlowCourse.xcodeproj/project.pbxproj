@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		605EF5F42D33B19000DBDE74 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 605EF5F32D33B19000DBDE74 /* ComposableArchitecture */; };
+		60FF27D42D3BBD3300F23BB7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 60FF27D32D3BBD3300F23BB7 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				605EF5F42D33B19000DBDE74 /* ComposableArchitecture in Frameworks */,
+				60FF27D42D3BBD3300F23BB7 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = TaskFlowCourse;
 			packageProductDependencies = (
 				605EF5F32D33B19000DBDE74 /* ComposableArchitecture */,
+				60FF27D32D3BBD3300F23BB7 /* FirebaseFirestore */,
 			);
 			productName = TaskFlowCourse;
 			productReference = 605EF5C52D33B16700DBDE74 /* TaskFlowCourse.app */;
@@ -203,6 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				605EF5F22D33B19000DBDE74 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				60FF27D22D3BBD3300F23BB7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 605EF5C62D33B16700DBDE74 /* Products */;
@@ -577,6 +581,14 @@
 				minimumVersion = 1.17.1;
 			};
 		};
+		60FF27D22D3BBD3300F23BB7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -584,6 +596,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 605EF5F22D33B19000DBDE74 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		60FF27D32D3BBD3300F23BB7 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60FF27D22D3BBD3300F23BB7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

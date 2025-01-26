@@ -21,7 +21,7 @@ struct TaskListReducer {
     case tasksFetched([Task])
     case onAppear
     case eventReceived([Task])
-    case deleteTask(String)
+    case deleteTask(IndexSet)
   }
 
   private enum CancelId: Hashable {
@@ -43,9 +43,12 @@ struct TaskListReducer {
           try await self.firebase.saveTask(task)
         }
 
-      case .deleteTask(let id):
+      case .deleteTask(let indexSet):
+        guard let index = indexSet.first
+        else { return .none }
+        let task = state.taskList[index]
         return .run { _ in
-          try await self.firebase.deleteTask(id)
+          try await self.firebase.deleteTask(task.id.uuidString)
         }
 
       case .onAppear:

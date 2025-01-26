@@ -14,7 +14,7 @@ struct TaskListView: View {
             Text(task.dateCreated, format: .dateTime)
           }
         }
-        .onDelete { store.send(.deleteTask(task.id)) }
+        .onDelete { store.send(.deleteTask($0)) }
       }
       .listStyle(.plain)
 

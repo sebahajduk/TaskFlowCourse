@@ -42,23 +42,18 @@ extension FirebaseClient: DependencyKey {
   }
 }
 
+extension FirebaseClient: TestDependencyKey {
+  static var testValue = Self(
+    fetchTasks: unimplemented("\(Self.self).fetchTasks"),
+    saveTask: unimplemented("\(Self.self).saveTask"),
+    deleteTask: unimplemented("\(Self.self).deleteTask"),
+    changesStream: unimplemented("\(Self.self).changesStream")
+  )
+}
+
 extension DependencyValues {
   var firebaseClient: FirebaseClient {
     get { self[FirebaseClient.self] }
     set { self[FirebaseClient.self] = newValue }
   }
 }
-
-//final class FirebaseClient {
-//  static let shared = FirebaseClient()
-//  private let db = Firestore.firestore()
-//  private init() {}
-//
-//  func fetchTasks() async throws -> [Task] {
-//
-//  }
-//
-//  func saveTask(_ task: Task) async throws {
-//
-//  }
-//}

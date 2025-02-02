@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		605EF5F42D33B19000DBDE74 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 605EF5F32D33B19000DBDE74 /* ComposableArchitecture */; };
+		606815632D462E72006A5700 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 606815622D462E72006A5700 /* SnapshotTesting */; };
 		60FF27D42D3BBD3300F23BB7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 60FF27D32D3BBD3300F23BB7 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
@@ -45,11 +46,6 @@
 			path = TaskFlowCourseTests;
 			sourceTree = "<group>";
 		};
-		605EF5E22D33B16800DBDE74 /* TaskFlowCourseUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TaskFlowCourseUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				606815632D462E72006A5700 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +81,6 @@
 			children = (
 				605EF5C72D33B16700DBDE74 /* TaskFlowCourse */,
 				605EF5D82D33B16800DBDE74 /* TaskFlowCourseTests */,
-				605EF5E22D33B16800DBDE74 /* TaskFlowCourseUITests */,
 				605EF5C62D33B16700DBDE74 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -144,6 +140,7 @@
 			);
 			name = TaskFlowCourseTests;
 			packageProductDependencies = (
+				606815622D462E72006A5700 /* SnapshotTesting */,
 			);
 			productName = TaskFlowCourseTests;
 			productReference = 605EF5D52D33B16800DBDE74 /* TaskFlowCourseTests.xctest */;
@@ -161,9 +158,6 @@
 			);
 			dependencies = (
 				605EF5E12D33B16800DBDE74 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				605EF5E22D33B16800DBDE74 /* TaskFlowCourseUITests */,
 			);
 			name = TaskFlowCourseUITests;
 			packageProductDependencies = (
@@ -207,6 +201,7 @@
 			packageReferences = (
 				605EF5F22D33B19000DBDE74 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				60FF27D22D3BBD3300F23BB7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				606815612D462E72006A5700 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 605EF5C62D33B16700DBDE74 /* Products */;
@@ -581,6 +576,14 @@
 				minimumVersion = 1.17.1;
 			};
 		};
+		606815612D462E72006A5700 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.7;
+			};
+		};
 		60FF27D22D3BBD3300F23BB7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -596,6 +599,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 605EF5F22D33B19000DBDE74 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		606815622D462E72006A5700 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 606815612D462E72006A5700 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 		60FF27D32D3BBD3300F23BB7 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;

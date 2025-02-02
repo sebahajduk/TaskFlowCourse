@@ -29,6 +29,7 @@ struct TaskListReducer {
   }
 
   @Dependency(\.date.now) private var now
+  @Dependency(\.uuid) private var uuid
   @Dependency(\.firebaseClient) private var firebase
 
   var body: some ReducerOf<Self> {
@@ -37,7 +38,11 @@ struct TaskListReducer {
     Reduce { state, action in
       switch action {
       case .addButtonTapped:
-        let task = Task(name: state.taskName, dateCreated: self.now)
+        let task = Task(
+          id: self.uuid(),
+          name: state.taskName,
+          dateCreated: self.now
+        )
         state.taskName = ""
         return .run { send in
           try await self.firebase.saveTask(task)

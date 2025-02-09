@@ -22,6 +22,12 @@ struct TaskListReducer {
     case onAppear
     case eventReceived([Task])
     case deleteTask(IndexSet)
+    case taskTapped(Task)
+    case delegate(Delegate)
+
+    enum Delegate: Equatable {
+      case addToFinishedTasks(Task)
+    }
   }
 
   private enum CancelId: Hashable {
@@ -48,6 +54,13 @@ struct TaskListReducer {
           try await self.firebase.saveTask(task)
         }
 
+      case .taskTapped(var task):
+        task.finishDate = self.now
+        return .run { [task] send in
+          try await self.firebase.saveTask(task)
+          await send(.delegate(.addToFinishedTasks(task)))
+        }
+
       case .deleteTask(let indexSet):
         guard let index = indexSet.first
         else { return .none }
@@ -65,7 +78,7 @@ struct TaskListReducer {
         .cancellable(id: CancelId.cancellation)
 
       case .eventReceived(let event):
-        state.taskList = event
+        state.taskList = event.filter { $0.finishDate == nil }
         return .none
 
       case .cancelEffect:
@@ -77,8 +90,10 @@ struct TaskListReducer {
 
       case .binding:
         return .none
+
+      case .delegate:
+        return .none
       }
     }
-    ._printChanges()
   }
 }

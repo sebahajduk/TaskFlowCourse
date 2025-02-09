@@ -23,14 +23,7 @@ struct TaskFlowCourseApp: App {
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
   var body: some Scene {
     WindowGroup {
-      TaskListView(
-        store: Store(
-          initialState: TaskListReducer.State(),
-          reducer: {
-            TaskListReducer()
-          }
-        )
-      )
+      TabBarView(store: .init(initialState: .init(), reducer: { TabBarReducer() }))
     }
   }
 }

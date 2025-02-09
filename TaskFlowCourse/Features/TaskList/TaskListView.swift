@@ -8,10 +8,19 @@ struct TaskListView: View {
     VStack {
       List {
         ForEach(store.taskList) { task in
-          VStack(alignment: .leading) {
-            Text(task.name)
-              .frame(maxWidth: .infinity, alignment: .leading)
-            Text(task.dateCreated, format: .dateTime)
+          HStack {
+            Image(
+              systemName: task.finishDate == nil
+              ? "circle"
+              : "circle.fill"
+            )
+            .onTapGesture { store.send(.taskTapped(task)) }
+
+            VStack(alignment: .leading) {
+              Text(task.name)
+                .frame(maxWidth: .infinity, alignment: .leading)
+              Text(task.dateCreated, format: .dateTime)
+            }
           }
         }
         .onDelete { store.send(.deleteTask($0)) }
@@ -28,14 +37,6 @@ struct TaskListView: View {
 
       Button("Add task") {
         store.send(.addButtonTapped)
-      }
-      .padding(10.0)
-      .background(Color.purple)
-      .foregroundStyle(Color.white)
-      .font(.footnote.bold())
-
-      Button("Cancel effect") {
-        store.send(.cancelEffect)
       }
       .padding(10.0)
       .background(Color.purple)

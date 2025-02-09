@@ -7,10 +7,17 @@ struct TaskListReducer {
   struct State: Equatable {
     var taskName: String
     var taskList: [Task]
+    var taskSessionWorkFinished: Task?
+    @Presents var taskDetails: TaskDetailsReducer.State?
 
-    init(taskName: String = "", taskList: [Task] = []) {
+    init(
+      taskName: String = "",
+      taskList: [Task] = [],
+      taskDetails: TaskDetailsReducer.State? = nil
+    ) {
       self.taskName = taskName
       self.taskList = taskList
+      self.taskDetails = taskDetails
     }
   }
 
@@ -24,6 +31,8 @@ struct TaskListReducer {
     case deleteTask(IndexSet)
     case taskTapped(Task)
     case delegate(Delegate)
+    case navigateToDetails(Task)
+    case taskDetails(PresentationAction<TaskDetailsReducer.Action>)
 
     enum Delegate: Equatable {
       case addToFinishedTasks(Task)
@@ -43,6 +52,13 @@ struct TaskListReducer {
 
     Reduce { state, action in
       switch action {
+      case .taskDetails(.dismiss):
+        print("taskDetailsDismissed")
+        return .none
+
+      case .taskDetails:
+        return .none
+
       case .addButtonTapped:
         let task = Task(
           id: self.uuid(),
@@ -53,6 +69,11 @@ struct TaskListReducer {
         return .run { send in
           try await self.firebase.saveTask(task)
         }
+
+      case .navigateToDetails(let task):
+        state.taskSessionWorkFinished = task
+        state.taskDetails = .init(task: task)
+        return .none
 
       case .taskTapped(var task):
         task.finishDate = self.now
@@ -94,6 +115,9 @@ struct TaskListReducer {
       case .delegate:
         return .none
       }
+    }
+    .ifLet(\.$taskDetails, action: \.taskDetails) {
+      TaskDetailsReducer()
     }
   }
 }

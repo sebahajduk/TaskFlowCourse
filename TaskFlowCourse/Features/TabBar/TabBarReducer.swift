@@ -35,6 +35,5 @@ struct TabBarReducer {
         return .none
       }
     }
-    ._printChanges()
   }
 }
